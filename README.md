@@ -12,3 +12,5 @@ Code for Light Sensor added, checking light in room and displaying on LCD
 Commit 2: 'MainCode-LightHeatHeart' Got the main peripherals working with LCD screen, and the LEDs
 
 Heartrate sensor is inconsistent, but I have a video of it working, upload somewhere and get a link here: 
+
+Commit 3: 'MainCode-WebsiteStart' get website functioning and gathering data from sensor
