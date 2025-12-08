@@ -44,7 +44,14 @@ void setup() {
 
 // MAIN CODE
 void loop() {
+  // VARIABLES
+  int validValue = 60;
+  int t=0;
+
   // START
+  digitalWrite(GLED,HIGH);
+  digitalWrite(YLED,HIGH);
+  digitalWrite(RLED,HIGH);
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Peripheral testing");
@@ -56,6 +63,9 @@ void loop() {
   delay(2000);
 
   // HEAT READING
+  digitalWrite(GLED,LOW);
+  digitalWrite(YLED,LOW);
+  digitalWrite(RLED,LOW);
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Heat Sensor");
@@ -69,6 +79,9 @@ void loop() {
 
   
   // LIGHT READING
+  digitalWrite(GLED,HIGH);
+  digitalWrite(YLED,HIGH);
+  digitalWrite(RLED,HIGH);
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Light Sensor");
@@ -80,18 +93,32 @@ void loop() {
   Serial.println("LCD BOTTOM SCR: " + light);
   delay(2000);
 
-  /*
+  
   // HEART READING
+  digitalWrite(GLED,LOW);
+  digitalWrite(YLED,LOW);
+  digitalWrite(RLED,LOW);
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("Peripheral testing");
-  Serial.println("LCD TOP SCR: Peripheral testing");
-  delay(300);
+  lcd.print("Heartrate Sensor");
+  Serial.println("LCD TOP SCR: Heartrate Sensor");
+  int rateValue;
+  heartrate.getValue(HEART_INPUT);
+  rateValue = heartrate.getRate();
+  if(rateValue){
+    Serial.println(rateValue);
+  }
+  if (rateValue < 130){
+    if (rateValue > 55){
+      validValue = rateValue;
+      //t = 0;
+    }
+  }
   lcd.setCursor(0,1);
-  lcd.print("With LCD Screen");
-  Serial.println("LCD BOTTOM SCR: With LCD Screen");
+  lcd.print(validValue);
+  Serial.println("LCD BOTTOM SCR: " + validValue);
   delay(2000);
-
+  /*
   // SOUND READING (ugh)
   lcd.clear();
   lcd.setCursor(0,1);
