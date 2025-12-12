@@ -1,4 +1,9 @@
 // LIBRARIES
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WebServer.h>
+#include <ESPmDNS.h>
+#include "homepage.h"
 #include <Wire.h>
 #include "rgb_lcd.h"
 #include <DFRobot_DHT11.h>
@@ -19,34 +24,99 @@ DFRobot_Heartrate heartrate(DIGITAL_MODE);
 #define RLED 32
 //LCD YEL 22, WHITE 21 
 
+const char* ssid = "PaulsHotspot";
+const char* password = "G00470372";
+
+WebServer server(80);
+
 // FUNCTIONS
 String getTemp() {
   DHT.read(HEAT_INPUT);
-  String temp =(String) DHT.temperature;
-  temp += " C";
-  return temp;
+  String tempRead =(String) DHT.temperature;
+  tempRead += " C";
+  return tempRead;
+}
+
+String getLight(){
+  String lightRead = (String) analogRead(LIGHT_INPUT);
+  return lightRead;
+}
+
+String serverHeartbeat(){
+  return (String) 60;
+}
+
+
+void handleRoot() {
+  String message = homePagePart1 + getTemp() + homePagePart2 + getLight() + homePagePart3 + serverHeartbeat() + homePagePart4;
+  server.send(200, "text/html", message);
+}
+
+void handleNotFound() {
+  String message = "File Not Found\n\n";
+  message += "URI: ";
+  message += server.uri();
+  message += "\nMethod: ";
+  message += (server.method() == HTTP_GET) ? "GET" : "POST";
+  message += "\nArguments: ";
+  message += server.args();
+  message += "\n";
+  for (uint8_t i = 0; i < server.args(); i++) {
+    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
+  }
+  server.send(404, "text/plain", message);
 }
 
 // SETUP CODE
-void setup() {
+void setup(void) {
+  Serial.begin(115200);
   // LEDS
   pinMode(GLED,OUTPUT);
   pinMode(YLED,OUTPUT);
   pinMode(RLED,OUTPUT);
-  // SERIAL FOR TESTING
-  Serial.begin(115200);
   // LCD
   lcd.begin(16,2);
-  lcd.print("All Peripherals Test");
-  Serial.println("LCD TOP SCR: All Peripherals Test");
+  lcd.print("Peri/WebServer\nTest");
+  Serial.println("LCD SCR: Peri/WebServer\nTest");
   delay(1000);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.println("");
+
+  // Wait for connection
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  if (MDNS.begin("esp32")) {
+    Serial.println("MDNS responder started");
+  }
+
+  server.on("/", handleRoot);
+  server.on("/inline", []() {
+    server.send(200, "text/plain", "this works as well");
+  });
+  server.onNotFound(handleNotFound);
+
+  server.begin();
+  Serial.println("HTTP server started");
 }
 
-// MAIN CODE
-void loop() {
+void loop(void) {
   // VARIABLES
   int validValue = 60;
   int t=0;
+
+  // SERVER
+  server.handleClient();
+  delay(2);//allow the cpu to switch to other tasks
 
   // START
   digitalWrite(GLED,HIGH);
@@ -55,11 +125,9 @@ void loop() {
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Peripheral testing");
-  Serial.println("LCD TOP SCR: Peripheral testing");
   delay(100);
   lcd.setCursor(0,1);
   lcd.print("With LCD Screen");
-  Serial.println("LCD BOTTOM SCR: With LCD Screen");
   delay(2000);
 
   // HEAT READING
@@ -69,12 +137,10 @@ void loop() {
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Heat Sensor");
-  Serial.println("LCD TOP SCR: Heat Sensor");
   String heat = getTemp();
   delay(300);
   lcd.setCursor(0,1);
   lcd.print(heat);
-  Serial.println("LCD BOTTOM SCR: " + heat);
   delay(2000);
 
   
@@ -85,12 +151,10 @@ void loop() {
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Light Sensor");
-  Serial.println("LCD TOP SCR: Light Sensor");
   int light = analogRead(LIGHT_INPUT);
   delay(300);
   lcd.setCursor(0,1);
   lcd.print(light);
-  Serial.println("LCD BOTTOM SCR: " + light);
   delay(2000);
 
   
@@ -101,7 +165,6 @@ void loop() {
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Heartrate Sensor");
-  Serial.println("LCD TOP SCR: Heartrate Sensor");
   int rateValue;
   heartrate.getValue(HEART_INPUT);
   rateValue = heartrate.getRate();
@@ -116,20 +179,16 @@ void loop() {
   }
   lcd.setCursor(0,1);
   lcd.print(validValue);
-  Serial.println("LCD BOTTOM SCR: " + validValue);
   delay(2000);
+  
   /*
-  // SOUND READING (ugh)
+  // SOUND READING
   lcd.clear();
   lcd.setCursor(0,1);
   lcd.print("Peripheral testing");
-  Serial.println("LCD TOP SCR: Peripheral testing");
   delay(100);
   lcd.setCursor(0,2);
   lcd.print("With LCD Screen");
-  Serial.println("LCD BOTTOM SCR: With LCD Screen");
   delay(500);
-
-
   */
 }
