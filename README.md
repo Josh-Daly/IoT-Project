@@ -20,3 +20,6 @@ Website code added, working as intended, updates for light, heart and heat value
 Light reading currently not working, gives 0 for website and lcd, solve before showcase
 Heart reading not working for website, website update loop doesn't work with current heart reading code, doesn't need >
 solving before demonstration
+
+Update 4: 'MainCode-Cleanup'
+Current Issues: Light sensor not working (suspected bad input pin), heartbeat inconsistent (not an issue for demoing), bluetooth connection inconsistent (maybe code problem?) 
