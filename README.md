@@ -35,8 +35,8 @@ Heart reading not working for website, website update loop doesn't work with cur
 Update 4: 'MainCode-Cleanup'
 
 Current Issues: 
-Light sensor not working (~suspected bad input pin~, not pin, heat works fine with it)
+Light sensor not working (~suspected bad input pin~, not pin, heat works fine with it) - 
 
-Heartbeat sensor inconsistent (not an issue for demoing)
+Heartbeat sensor inconsistent (not an issue for demoing) - Ignore for now
 
-Bluetooth connection inconsistent (think it's when the phone is connected to uni wifi) 
+Bluetooth connection inconsistent (think it's when the phone is connected to uni wifi) - Working fine
