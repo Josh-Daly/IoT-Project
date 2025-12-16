@@ -22,4 +22,7 @@ Heart reading not working for website, website update loop doesn't work with cur
 solving before demonstration
 
 Update 4: 'MainCode-Cleanup'
-Current Issues: Light sensor not working (suspected bad input pin), heartbeat inconsistent (not an issue for demoing), bluetooth connection inconsistent (maybe code problem?) 
+Current Issues: 
+Light sensor not working (suspected bad input pin)
+Heartbeat sensor inconsistent (not an issue for demoing)
+Bluetooth connection inconsistent (think it's when the phone is connected to uni wifi) 
