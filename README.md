@@ -21,6 +21,8 @@ Light reading currently not working, gives 0 for website and lcd, solve before s
 Heart reading not working for website, website update loop doesn't work with current heart reading code, doesn't need >
 solving before demonstration
 
+------------------------------------------------------------------------------
+
 Update 4: 'MainCode-Cleanup'
 
 Current Issues: 
