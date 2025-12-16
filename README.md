@@ -1,7 +1,10 @@
 Paul Daly
+
 G00470372
 
+
 Device to Monitor Conditions 
+
 for Panic/Anxiety Attacks
 
 ------------------------------------------------------------------------------
@@ -9,7 +12,9 @@ for Panic/Anxiety Attacks
 Update 1: Inital files, working code for testing the peripherals, will be adapted into main device code
 
 Code for LCD added, displaying info from the peripherals
+
 Code for DHT11 added, checking temperature in room and displaying on LCD
+
 Code for Light Sensor added, checking light in room and displaying on LCD
 
 ------------------------------------------------------------------------------
@@ -23,9 +28,10 @@ Heartrate sensor is inconsistent, but I have a video of it working, uploaded to 
 Update 3: 'MainCode-WebsiteStart' get website functioning and gathering data from sensors
 
 Website code added, working as intended, updates for light, heart and heat values
+
 Light reading currently not working, gives 0 for website and lcd, solve before showcase
-Heart reading not working for website, website update loop doesn't work with current heart reading code, doesn't need >
-solving before demonstration
+
+Heart reading not working for website, website update loop doesn't work with current heart reading code, doesn't need solving before demonstration
 
 ------------------------------------------------------------------------------
 
@@ -33,5 +39,7 @@ Update 4: 'MainCode-Cleanup'
 
 Current Issues: 
 Light sensor not working (suspected bad input pin)
+
 Heartbeat sensor inconsistent (not an issue for demoing)
+
 Bluetooth connection inconsistent (think it's when the phone is connected to uni wifi) 
