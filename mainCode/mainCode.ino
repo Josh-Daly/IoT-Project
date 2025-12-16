@@ -16,16 +16,20 @@ DFRobot_Heartrate heartrate(DIGITAL_MODE);
 
 // PINS
 #define HEAT_INPUT 19
-#define SOUND_INPUT 34
+#define SOUND_INPUT 34 //SOUND SENSOR NON-FUNCTIONING RN
 #define HEART_INPUT 13
-#define LIGHT_INPUT 14
+#define LIGHT_INPUT 25 //ACTUAL: 14, TEST: 25
 #define GLED 27
 #define YLED 26
 #define RLED 32
 //LCD YEL 22, WHITE 21 
 
-const char* ssid = "PaulsHotspot";
-const char* password = "G00470372";
+// CONSTANTS
+const char* ssid = "PaulHotspot";
+const char* password = "12345678";
+const int B_DELAY = 1000;
+const int S_DELAY = 100;
+
 
 WebServer server(80);
 
@@ -76,9 +80,11 @@ void setup(void) {
   pinMode(RLED,OUTPUT);
   // LCD
   lcd.begin(16,2);
-  lcd.print("Peri/WebServer\nTest");
-  Serial.println("LCD SCR: Peri/WebServer\nTest");
-  delay(1000);
+  lcd.print("Peripherals +");
+  lcd.setCursor(0,1);
+  lcd.print("WebServer Test");
+  Serial.println("LCD SCR: Peripherals +\nWebServer Test");
+  delay(B_DELAY);
 
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
@@ -111,8 +117,8 @@ void setup(void) {
 
 void loop(void) {
   // VARIABLES
-  int validValue = 60;
-  int t=0;
+  int validValue = 60; //NONFUNC
+  int t=0; //NONFUNC
 
   // SERVER
   server.handleClient();
@@ -124,12 +130,13 @@ void loop(void) {
   digitalWrite(RLED,HIGH);
   lcd.clear();
   lcd.setCursor(0,0);
-  lcd.print("Peripheral testing");
-  delay(100);
+  lcd.print("Project Demo");
+  delay(S_DELAY);
   lcd.setCursor(0,1);
-  lcd.print("With LCD Screen");
-  delay(2000);
-
+  lcd.print("Sensors/Website");
+  delay(B_DELAY);
+  delay(B_DELAY);
+  
   // HEAT READING
   digitalWrite(GLED,LOW);
   digitalWrite(YLED,LOW);
@@ -138,11 +145,10 @@ void loop(void) {
   lcd.setCursor(0,0);
   lcd.print("Heat Sensor");
   String heat = getTemp();
-  delay(300);
+  delay(S_DELAY);
   lcd.setCursor(0,1);
   lcd.print(heat);
-  delay(2000);
-
+  delay(B_DELAY);
   
   // LIGHT READING
   digitalWrite(GLED,HIGH);
@@ -152,12 +158,12 @@ void loop(void) {
   lcd.setCursor(0,0);
   lcd.print("Light Sensor");
   int light = analogRead(LIGHT_INPUT);
-  delay(300);
+  Serial.println(light);
+  delay(S_DELAY);
   lcd.setCursor(0,1);
   lcd.print(light);
-  delay(2000);
+  delay(B_DELAY);
 
-  
   // HEART READING
   digitalWrite(GLED,LOW);
   digitalWrite(YLED,LOW);
@@ -165,6 +171,7 @@ void loop(void) {
   lcd.clear();
   lcd.setCursor(0,0);
   lcd.print("Heartrate Sensor");
+  delay(S_DELAY);
   int rateValue;
   heartrate.getValue(HEART_INPUT);
   rateValue = heartrate.getRate();
@@ -179,8 +186,8 @@ void loop(void) {
   }
   lcd.setCursor(0,1);
   lcd.print(validValue);
-  delay(2000);
-  
+  delay(B_DELAY);
+
   /*
   // SOUND READING
   lcd.clear();
