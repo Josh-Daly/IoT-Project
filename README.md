@@ -35,7 +35,7 @@ Heart reading not working for website, website update loop doesn't work with cur
 Update 4: 'MainCode-Cleanup'
 
 Current Issues: 
-Light sensor not working (suspected bad input pin)
+Light sensor not working (~suspected bad input pin~, not pin, heat works fine with it)
 
 Heartbeat sensor inconsistent (not an issue for demoing)
 
