@@ -1,11 +1,8 @@
-Paul Daly
+Paul Daly - G00470372
 
-G00470372
+Bachelor of Engineering (Honours) in Software and Electronic Engineering - Year 2 Semester 1 - Internet of Things Project
 
-
-Device to Monitor Conditions 
-
-for Panic/Anxiety Attacks
+Device to Monitor Conditions for Panic/Anxiety Attacks
 
 ------------------------------------------------------------------------------
 
