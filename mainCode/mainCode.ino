@@ -30,6 +30,9 @@ const char* password = "12345678";
 const int B_DELAY = 1000;
 const int S_DELAY = 100;
 
+// Variables
+int validValue = 60; 
+
 
 WebServer server(80);
 
@@ -113,11 +116,16 @@ void setup(void) {
 
   server.begin();
   Serial.println("HTTP server started");
+
+  lcd.clear();
+  lcd.begin(0,0);
+  lcd.print("Connected");
+  delay(B_DELAY);
+  delay(B_DELAY);
 }
 
 void loop(void) {
   // VARIABLES
-  int validValue = 60; //NONFUNC
   int t=0; //NONFUNC
 
   // SERVER
@@ -158,7 +166,7 @@ void loop(void) {
   lcd.setCursor(0,0);
   lcd.print("Light Sensor");
   int light = analogRead(LIGHT_INPUT);
-  Serial.println(light);
+  //Serial.println(light);
   delay(S_DELAY);
   lcd.setCursor(0,1);
   lcd.print(light);
